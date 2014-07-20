@@ -458,11 +458,17 @@ public class GifDrawable extends Drawable implements Animatable, MediaPlayerCont
         mIsRedrawNeeded.set(false);
         mIsRunning.set(false);
         unscheduleSelf(mRedrawFlagSetter);
-        mExecutor.shutdown();
-        int tmpPtr = mGifInfoPtr;
+        final int tmpPtr = mGifInfoPtr;
         mGifInfoPtr = 0;
         mColors = null;
-        free(tmpPtr);
+        mExecutor.submit(new Runnable(){
+            @Override
+            public void run() {
+                free(tmpPtr);
+            }
+        });
+
+        mExecutor.shutdown();
     }
 
     @Override
