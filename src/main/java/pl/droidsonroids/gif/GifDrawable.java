@@ -78,6 +78,7 @@ public class GifDrawable extends Drawable implements Animatable, MediaPlayerCont
 
     private static native void restoreRemainder(int gifFileInPtr);
 
+
     private static native long getAllocationByteCount(int gifFileInPtr);
 
     private volatile int mGifInfoPtr;
@@ -480,6 +481,10 @@ public class GifDrawable extends Drawable implements Animatable, MediaPlayerCont
     @Override
     public int getDuration() {
         return getDuration(mGifInfoPtr);
+    }
+
+    public int getCurrentFrameDuration() {
+        return mMetaData[4];
     }
 
     /**
